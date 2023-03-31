@@ -2,21 +2,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement, incrementByAmount } from "./redux/counter";
 import "./App.css";
 import { useState, useEffect } from "react";
+import { getPostsFetch } from "./redux/posts";
+import posts from "./redux/posts";
 
 function App() {
   const { count } = useSelector((state) => state.counter);
-
+  const { postsList = posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
   // primjer posts
-  const [posts, setPosts] = useState([]);
+  //  const [posts, setPosts] = useState([]);
   /*useEffect(() => {
     fetch("https:/jsonplaceholder.typecode.com/posts")
       .then((res) => res.json)
       .then((data) => setPosts(data));
   }, []); */
 
-  const togglePostsHandler = () => {
+  /* const togglePostsHandler = () => {
     if (!posts.length) {
       fetch("https://jsonplaceholder.typecode.com/posts")
         .then((res) => res.json)
@@ -25,7 +27,7 @@ function App() {
       setPosts([]);
     }
   };
-
+*/
   return (
     <div className="App">
       <h1>Redux</h1>
@@ -38,7 +40,8 @@ function App() {
 
       <br />
       <br />
-      <button onClick={getAllPosts}>Get Posts</button>
+      <button onClick={() => dispatch(getPostsFetch())}>Get Posts</button>
+
       {posts.map(({ id, title }) => {
         return <div key={posts.id}>{title}</div>;
       })}
